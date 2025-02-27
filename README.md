@@ -56,18 +56,16 @@ You can customize Peek by passing options when initializing:
 ```javascript
 const peek = new Peek({
   duration: 3000,           // Duration in milliseconds
-  position: 'top-right',    // Position of toasts
   maxToasts: 3              // Maximum number of toasts to show at once
 });
 ```
 
 ### Options
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `duration` | number | 5000 | Duration in milliseconds before toast disappears |
-| `position` | string | 'bottom-right' | Position of toasts ('top-right', 'top-left', 'bottom-right', 'bottom-left') |
-| `maxToasts` | number | 3 | Maximum number of toasts to show at once |
+| Option     | Type   | Default | Description                                      |
+|------------|--------|---------|--------------------------------------------------|
+| duration   | number | 5000    | Duration in milliseconds before toast disappears |
+| maxToasts  | number | 3       | Maximum number of toasts to show at once        |
 
 ### Toast Options
 
