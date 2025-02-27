@@ -1,6 +1,6 @@
 {
   "name": "peek-notify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight, modern toast notification library with beautiful animations",
   "main": "dist/peek.js",
   "module": "dist/peek.esm.js",
