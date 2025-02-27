@@ -13,6 +13,7 @@ A lightweight, modern and customizable toast notification library for web applic
 - 📦 Modern bundle (ES modules, UMD)
 - 🔄 Smart toast stacking
 - ⚛️ React support
+- 💚 Vue.js support
 
 ## Installation
 
@@ -50,6 +51,175 @@ peek.info('Here is some information.');
 
 // With titles
 peek.success('Your changes have been saved.', 'Success');
+```
+
+### Vue.js Usage
+
+#### Composition API Example
+
+```vue
+<!-- composables/usePeek.ts -->
+import { ref, onMounted, type Ref } from 'vue'
+import { Peek } from 'peek-notify'
+
+export function usePeek(options = {}) {
+  const peekInstance: Ref<Peek | null> = ref(null)
+
+  onMounted(() => {
+    peekInstance.value = new Peek(options)
+  })
+
+  const show = (options: any) => peekInstance.value?.show(options)
+  const success = (message: string, title?: string) => peekInstance.value?.success(message, title)
+  const error = (message: string, title?: string) => peekInstance.value?.error(message, title)
+  const warning = (message: string, title?: string) => peekInstance.value?.warning(message, title)
+  const info = (message: string, title?: string) => peekInstance.value?.info(message, title)
+
+  return {
+    show,
+    success,
+    error,
+    warning,
+    info
+  }
+}
+
+<!-- Component.vue -->
+<script setup lang="ts">
+import { usePeek } from '../composables/usePeek'
+
+const toast = usePeek({ maxToasts: 3 })
+
+const showNotification = () => {
+  toast.show({
+    title: 'Hello Vue!',
+    message: 'Welcome to Peek notifications'
+  })
+}
+
+const showSuccess = () => {
+  toast.success('Operation completed!', 'Success')
+}
+</script>
+
+<template>
+  <div>
+    <button @click="showNotification">Show Notification</button>
+    <button @click="showSuccess">Show Success</button>
+  </div>
+</template>
+```
+
+#### Options API Example
+
+```vue
+<!-- plugins/peek.ts -->
+import { Peek } from 'peek-notify'
+
+export const peekPlugin = {
+  install(app, options = {}) {
+    const peek = new Peek(options)
+    
+    app.config.globalProperties.$peek = {
+      show: (opts) => peek.show(opts),
+      success: (message, title) => peek.success(message, title),
+      error: (message, title) => peek.error(message, title),
+      warning: (message, title) => peek.warning(message, title),
+      info: (message, title) => peek.info(message, title)
+    }
+  }
+}
+
+<!-- main.ts -->
+import { createApp } from 'vue'
+import { peekPlugin } from './plugins/peek'
+import App from './App.vue'
+
+const app = createApp(App)
+app.use(peekPlugin, { maxToasts: 3 })
+app.mount('#app')
+
+<!-- Component.vue -->
+<script>
+export default {
+  methods: {
+    showNotification() {
+      this.$peek.show({
+        title: 'Hello Vue!',
+        message: 'Welcome to Peek notifications'
+      })
+    },
+    showSuccess() {
+      this.$peek.success('Operation completed!', 'Success')
+    }
+  }
+}
+</script>
+
+<template>
+  <div>
+    <button @click="showNotification">Show Notification</button>
+    <button @click="showSuccess">Show Success</button>
+  </div>
+</template>
+```
+
+#### Provide/Inject Pattern Example
+
+```vue
+<!-- providers/PeekProvider.vue -->
+<script setup lang="ts">
+import { provide, onMounted, ref } from 'vue'
+import { Peek } from 'peek-notify'
+
+const peekKey = Symbol('peek')
+const peek = ref<Peek | null>(null)
+
+onMounted(() => {
+  peek.value = new Peek()
+})
+
+provide(peekKey, {
+  show: (options: any) => peek.value?.show(options),
+  success: (message: string, title?: string) => peek.value?.success(message, title),
+  error: (message: string, title?: string) => peek.value?.error(message, title),
+  warning: (message: string, title?: string) => peek.value?.warning(message, title),
+  info: (message: string, title?: string) => peek.value?.info(message, title)
+})
+</script>
+
+<template>
+  <slot></slot>
+</template>
+
+<!-- App.vue -->
+<script setup>
+import PeekProvider from './providers/PeekProvider.vue'
+</script>
+
+<template>
+  <PeekProvider>
+    <!-- Your app content -->
+  </PeekProvider>
+</template>
+
+<!-- Component.vue -->
+<script setup lang="ts">
+import { inject } from 'vue'
+
+const peek = inject('peek')
+
+const showNotification = () => {
+  peek.show({
+    title: 'Hello Vue!',
+    message: 'Welcome to Peek notifications'
+  })
+}
+</script>
+
+<template>
+  <button @click="showNotification">Show Notification</button>
+</template>
 ```
 
 ### React Usage

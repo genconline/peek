@@ -113,6 +113,9 @@
                                     <button onclick="switchTab('react')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
                                         React
                                     </button>
+                                    <button onclick="switchTab('vue')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                                        Vue
+                                    </button>
                                 </nav>
                             </div>
                             
@@ -178,6 +181,67 @@ function App() {
                                         <div class="ml-3">
                                             <p class="text-sm text-amber-700">
                                                 <strong>Important:</strong> Initialize Peek in useEffect and store the instance in useRef to avoid creating multiple instances on re-renders.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="vue-tab" class="tab-content hidden">
+                                <p class="text-gray-600 mb-4 mt-6">Using Peek in a Vue.js component with Composition API:</p>
+                                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                                    <div class="bg-gray-900 rounded p-3">
+                                        <pre class="text-sm text-gray-200"><code><!-- composables/usePeek.ts -->
+import { ref, onMounted } from 'vue'
+import { Peek } from 'peek-notify'
+
+export function usePeek(options = {}) {
+  const peekInstance = ref(null)
+
+  onMounted(() => {
+    peekInstance.value = new Peek(options)
+  })
+
+  return {
+    show: (options) => peekInstance.value?.show(options),
+    success: (message, title) => peekInstance.value?.success(message, title),
+    error: (message, title) => peekInstance.value?.error(message, title),
+    warning: (message, title) => peekInstance.value?.warning(message, title),
+    info: (message, title) => peekInstance.value?.info(message, title)
+  }
+}</code></pre>
+                                    </div>
+                                </div>
+
+                                <p class="text-gray-600 mb-4">Using the composable in a component:</p>
+                                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                                    <div class="bg-gray-900 rounded p-3">
+                                        <pre class="text-sm text-gray-200"><code><script setup>
+import { usePeek } from '../composables/usePeek'
+
+const toast = usePeek({ maxToasts: 3 })
+
+const showNotification = () => {
+  toast.show({
+    title: 'Hello Vue!',
+    message: 'Welcome to Peek notifications'
+  })
+}
+</script>
+
+<template>
+  <button @click="showNotification">
+    Show Notification
+  </button>
+</template></code></pre>
+                                    </div>
+                                </div>
+
+                                <div class="bg-amber-50 border-l-4 border-amber-400 p-4 mb-6">
+                                    <div class="flex">
+                                        <div class="ml-3">
+                                            <p class="text-sm text-amber-700">
+                                                <strong>Note:</strong> Check the documentation for Options API and Provide/Inject pattern examples.
                                             </p>
                                         </div>
                                     </div>
