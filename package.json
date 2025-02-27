@@ -32,7 +32,7 @@
   ],
   "author": {
     "name": "Kerem",
-    "url": "https://github.com/keremcubuk"
+    "url": "https://github.com/genconline"
   },
   "license": "MIT",
   "devDependencies": {
@@ -44,12 +44,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/keremcubuk/peek.git"
+    "url": "git+https://github.com/genconline/peek.git"
   },
   "bugs": {
-    "url": "https://github.com/keremcubuk/peek/issues"
+    "url": "https://github.com/genconline/peek/issues"
   },
-  "homepage": "https://github.com/keremcubuk/peek#readme",
+  "homepage": "https://github.com/genconline/peek#readme",
   "publishConfig": {
     "access": "public"
   }
