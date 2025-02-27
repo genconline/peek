@@ -1,0 +1,35 @@
+# Development files
+.git
+.github
+.gitignore
+.npmignore
+.DS_Store
+*.log
+*.swp
+
+# Source maps
+*.map
+
+# Development directories
+node_modules/
+demo/
+docs/
+examples/
+test/
+tests/
+coverage/
+
+# Configuration files
+.eslintrc
+.prettierrc
+.editorconfig
+rollup.config.js
+rollup.config.mjs
+tsconfig.json
+jest.config.js
+.travis.yml
+.circleci/
+
+# Documentation
+CONTRIBUTING.md
+CHANGELOG.md 

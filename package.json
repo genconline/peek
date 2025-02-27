@@ -1,0 +1,56 @@
+{
+  "name": "peek-notify",
+  "version": "1.0.0",
+  "description": "A lightweight, modern toast notification library with beautiful animations",
+  "main": "dist/peek.js",
+  "module": "dist/peek.esm.js",
+  "types": "dist/peek.d.ts",
+  "style": "dist/peek.css",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "serve": "npx http-server . -o /demo/",
+    "prepare": "npm run build"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "keywords": [
+    "toast",
+    "notification",
+    "notify",
+    "alert",
+    "peek",
+    "snackbar",
+    "notifications",
+    "toast-notifications",
+    "javascript",
+    "typescript",
+    "ui",
+    "frontend"
+  ],
+  "author": {
+    "name": "Kerem",
+    "url": "https://github.com/keremcubuk"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
+    "rollup": "^4.12.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "typescript": "^5.3.3",
+    "tslib": "^2.6.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keremcubuk/peek.git"
+  },
+  "bugs": {
+    "url": "https://github.com/keremcubuk/peek/issues"
+  },
+  "homepage": "https://github.com/keremcubuk/peek#readme",
+  "publishConfig": {
+    "access": "public"
+  }
+}
