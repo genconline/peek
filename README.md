@@ -12,6 +12,7 @@ A lightweight, modern and customizable toast notification library for web applic
 - 🎯 TypeScript support
 - 📦 Modern bundle (ES modules, UMD)
 - 🔄 Smart toast stacking
+- ⚛️ React support
 
 ## Installation
 
@@ -53,6 +54,8 @@ peek.success('Your changes have been saved.', 'Success');
 
 ### React Usage
 
+#### Basic Component Example
+
 ```jsx
 import { useEffect, useRef } from 'react';
 import { Peek } from 'peek-notify';
@@ -90,6 +93,84 @@ function App() {
 }
 
 export default App;
+```
+
+#### Custom Hook Example
+
+```jsx
+// hooks/usePeek.js
+import { useEffect, useRef } from 'react';
+import { Peek } from 'peek-notify';
+
+export function usePeek(options = {}) {
+  const peekRef = useRef(null);
+
+  useEffect(() => {
+    peekRef.current = new Peek(options);
+  }, []);
+
+  return {
+    show: (options) => peekRef.current?.show(options),
+    success: (message, title) => peekRef.current?.success(message, title),
+    error: (message, title) => peekRef.current?.error(message, title),
+    warning: (message, title) => peekRef.current?.warning(message, title),
+    info: (message, title) => peekRef.current?.info(message, title),
+  };
+}
+
+// Usage in component
+function MyComponent() {
+  const toast = usePeek({ maxToasts: 3 });
+
+  const handleClick = () => {
+    toast.success('Operation successful!', 'Success');
+  };
+
+  return <button onClick={handleClick}>Show Toast</button>;
+}
+```
+
+#### Context Provider Example
+
+```jsx
+// context/PeekContext.js
+import { createContext, useContext } from 'react';
+import { usePeek } from '../hooks/usePeek';
+
+const PeekContext = createContext(null);
+
+export function PeekProvider({ children, options }) {
+  const toast = usePeek(options);
+  return <PeekContext.Provider value={toast}>{children}</PeekContext.Provider>;
+}
+
+export function usePeekContext() {
+  const context = useContext(PeekContext);
+  if (!context) {
+    throw new Error('usePeekContext must be used within a PeekProvider');
+  }
+  return context;
+}
+
+// Usage in app
+function App() {
+  return (
+    <PeekProvider options={{ maxToasts: 3 }}>
+      <MyComponent />
+    </PeekProvider>
+  );
+}
+
+// Usage in any component
+function MyComponent() {
+  const toast = usePeekContext();
+
+  const handleClick = () => {
+    toast.success('Operation successful!', 'Success');
+  };
+
+  return <button onClick={handleClick}>Show Toast</button>;
+}
 ```
 
 ## Configuration

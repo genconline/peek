@@ -104,11 +104,23 @@
                 <section id="basic-usage" class="scroll-mt-20">
                     <h2 class="text-3xl font-bold text-gray-900 mb-6">Basic Usage</h2>
                     <div class="prose max-w-none">
-                        <p class="text-gray-600 mb-4">Initialize Peek and show your first notification:</p>
-                        
-                        <div class="bg-gray-50 rounded-lg p-4 mb-6">
-                            <div class="bg-gray-900 rounded p-3">
-                                <pre class="text-sm text-gray-200"><code>// Initialize Peek
+                        <div class="mb-6">
+                            <div class="border-b border-gray-200">
+                                <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                                    <button onclick="switchTab('vanilla')" class="tab-button active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-gray-900 text-gray-900">
+                                        Vanilla JS
+                                    </button>
+                                    <button onclick="switchTab('react')" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                                        React
+                                    </button>
+                                </nav>
+                            </div>
+                            
+                            <div id="vanilla-tab" class="tab-content">
+                                <p class="text-gray-600 mb-4 mt-6">Initialize Peek and show your first notification:</p>
+                                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                                    <div class="bg-gray-900 rounded p-3">
+                                        <pre class="text-sm text-gray-200"><code>// Initialize Peek
 const peek = new Peek();
 
 // Show a simple notification
@@ -116,6 +128,60 @@ peek.show({
     title: 'Hello!',
     message: 'Welcome to Peek notifications.'
 });</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="react-tab" class="tab-content hidden">
+                                <p class="text-gray-600 mb-4 mt-6">Using Peek in a React component:</p>
+                                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                                    <div class="bg-gray-900 rounded p-3">
+                                        <pre class="text-sm text-gray-200"><code>import { useEffect, useRef } from 'react';
+import { Peek } from 'peek-notify';
+
+function App() {
+  const peekRef = useRef(null);
+
+  useEffect(() => {
+    // Initialize Peek once when component mounts
+    peekRef.current = new Peek();
+
+    // Optional: Cleanup on unmount
+    return () => {
+      // Any cleanup if needed
+    };
+  }, []);
+
+  const showNotification = () => {
+    peekRef.current.show({
+      title: 'Hello React!',
+      message: 'Welcome to Peek notifications'
+    });
+  };
+
+  const showSuccess = () => {
+    peekRef.current.success('Operation completed!', 'Success');
+  };
+
+  return (
+    <div>
+      <button onClick={showNotification}>Show Notification</button>
+      <button onClick={showSuccess}>Show Success</button>
+    </div>
+  );
+}</code></pre>
+                                    </div>
+                                </div>
+
+                                <div class="bg-amber-50 border-l-4 border-amber-400 p-4 mb-6">
+                                    <div class="flex">
+                                        <div class="ml-3">
+                                            <p class="text-sm text-amber-700">
+                                                <strong>Important:</strong> Initialize Peek in useEffect and store the instance in useRef to avoid creating multiple instances on re-renders.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -304,6 +370,27 @@ peek.info('Here is some information.', 'Info');</code></pre>
                 document.getElementById('mobileNav').classList.add('hidden');
             });
         });
+
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Show selected tab content
+            document.getElementById(`${tabName}-tab`).classList.remove('hidden');
+            
+            // Update tab button styles
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('border-gray-900', 'text-gray-900');
+                button.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Highlight active tab
+            const activeButton = document.querySelector(`[onclick="switchTab('${tabName}')"]`);
+            activeButton.classList.remove('border-transparent', 'text-gray-500');
+            activeButton.classList.add('border-gray-900', 'text-gray-900');
+        }
     </script>
 </body>
 </html> 
