@@ -27,6 +27,8 @@ yarn add peek-notify
 
 ## Usage
 
+### Vanilla JavaScript
+
 ```javascript
 import { Peek } from 'peek-notify';
 
@@ -47,6 +49,47 @@ peek.info('Here is some information.');
 
 // With titles
 peek.success('Your changes have been saved.', 'Success');
+```
+
+### React Usage
+
+```jsx
+import { useEffect, useRef } from 'react';
+import { Peek } from 'peek-notify';
+
+function App() {
+  const peekRef = useRef(null);
+
+  useEffect(() => {
+    // Initialize Peek once when component mounts
+    peekRef.current = new Peek();
+
+    // Optional: Cleanup on unmount
+    return () => {
+      // Any cleanup if needed
+    };
+  }, []);
+
+  const showNotification = () => {
+    peekRef.current.show({
+      title: 'Hello React!',
+      message: 'Welcome to Peek notifications'
+    });
+  };
+
+  const showSuccess = () => {
+    peekRef.current.success('Operation completed!', 'Success');
+  };
+
+  return (
+    <div>
+      <button onClick={showNotification}>Show Notification</button>
+      <button onClick={showSuccess}>Show Success</button>
+    </div>
+  );
+}
+
+export default App;
 ```
 
 ## Configuration
