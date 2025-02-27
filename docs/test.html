@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Peek Test</title>
+</head>
+<body>
+    <button onclick="showToast()">Show Toast</button>
+
+    <script src="../dist/peek.min.js"></script>
+    <script>
+        const { Peek } = window.Peek;
+        const peek = new Peek();
+        
+        window.showToast = () => {
+            peek.show({
+                title: 'Hello!',
+                message: 'This is a toast with a title.'
+            });
+        };
+    </script>
+</body>
+</html> 
